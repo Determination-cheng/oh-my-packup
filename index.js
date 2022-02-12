@@ -1,16 +1,46 @@
 import fs from 'fs'
 import path from 'path'
+// 生成 bundle 的核心依赖
 import parser from '@babel/parser'
 import traverse from '@babel/traverse'
 import {transformFromAst} from 'babel-core'
 import ejs from 'ejs'
+// loader
+import jsonLoader from './loader/jsonLoader.js'
 
+const webpackConfig = {
+    module: {
+        rules: [
+            {
+                test: /\.json$/,
+                use: [jsonLoader],
+            }
+        ]
+    }
+}
+
+//* 模块 id
 let id = 0
 
 //* 获得单个文件的依赖及相关信息
 function getDependencies(filePath) {
     //* 文件内容
-    const source = fs.readFileSync(filePath, {encoding: 'utf-8'})
+    let source = fs.readFileSync(filePath, {encoding: 'utf-8'})
+
+    //* loader
+    const loaders = webpackConfig.module.rules
+    loaders.forEach(({test, use}) => {
+        if (test.test(filePath)) {
+            if (Array.isArray(use)) {
+                source = use.reduceRight((preResult, curLoader) => {
+                    return curLoader(preResult)
+                }, source)
+                return
+            }
+            source = use(source)
+        }
+    })
+
     const ast = parser.parse(source, {sourceType: 'module'})
 
     //* 文件依赖

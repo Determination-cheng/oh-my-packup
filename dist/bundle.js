@@ -53,11 +53,33 @@
                 value: true
             });
             exports.bar = bar;
+
+            var _user = require("./user.json");
+
+            var _user2 = _interopRequireDefault(_user);
+
+            function _interopRequireDefault(obj) {
+                return obj && obj.__esModule ? obj : {default: obj};
+            }
+
             console.log('bar');
 
             function bar() {
                 console.log('bar function');
+                console.log(_user2.default);
             }
+        },
+        {"./user.json": 2}
+    ],
+
+    '2': [
+        function (require, module, exports) {
+            "use strict";
+
+            Object.defineProperty(exports, "__esModule", {
+                value: true
+            });
+            exports.default = "{\n  \"name\": \"chara\",\n  \"age\": 18\n}\n";
         },
         {}
     ],
