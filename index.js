@@ -7,6 +7,7 @@ import ejs from 'ejs'
 
 let id = 0
 
+//* 获得单个文件的依赖及相关信息
 function getDependencies(filePath) {
     //* 文件内容
     const source = fs.readFileSync(filePath, {encoding: 'utf-8'})
@@ -32,15 +33,17 @@ function getDependencies(filePath) {
     }
 }
 
+//* 创建整个项目的依赖图
 function createGraph() {
     const root = getDependencies('./example/main.js')
     const graph = [root]
 
     for (const asset of graph) {
+        // deps: string[]  依赖文件对 id 的映射
         asset.deps.forEach((dep) => {
             const filePath = path.resolve('./example', dep)
             const child = getDependencies(filePath)
-            asset.depMap[dep] = child.id
+            asset.depMap[dep] = child.id // { path: id }
             graph.push(child)
         })
     }
@@ -48,11 +51,15 @@ function createGraph() {
     return graph
 }
 
+//* 整个项目的依赖图
 const graph = createGraph()
 
+//* 构建 bundle
 function build(graph) {
+    //* ejs 模板
     const template = fs.readFileSync('./bundle.ejs', {encoding: 'utf-8'})
 
+    //* 提供给 ejs 模板的信息
     const data = graph.map(({depMap, code, id}) => {
         return {
             id,
@@ -61,8 +68,10 @@ function build(graph) {
         }
     })
 
+    //* 生成的 bundle 文件内容
     const code = ejs.render(template, {data})
 
+    //* 生成 bundle 文件
     fs.writeFileSync('./dist/bundle.js', code)
 }
 
