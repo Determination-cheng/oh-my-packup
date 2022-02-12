@@ -2,6 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import parser from '@babel/parser'
 import traverse from '@babel/traverse'
+import {transformFromAst} from 'babel-core'
+import ejs from 'ejs'
 
 function getDependencies(filePath) {
     //* 文件内容
@@ -16,7 +18,10 @@ function getDependencies(filePath) {
         }
     })
 
-    return {source, deps}
+    //* 将 esm 转换成 cjs 的代码
+    const {code} = transformFromAst(ast, null, {presets: ['env']})
+
+    return {filePath, deps, code}
 }
 
 function createGraph() {
@@ -34,8 +39,21 @@ function createGraph() {
     return graph
 }
 
-function run() {
-    createGraph()
+const graph = createGraph()
+
+function build(graph) {
+    const template = fs.readFileSync('./bundle.ejs', {encoding: 'utf-8'})
+
+    const data = graph.map(({filePath, code}) => {
+        return {
+            filePath,
+            code,
+        }
+    })
+
+    const code = ejs.render(template, {data})
+
+    fs.writeFileSync('./dist/bundle.js', code)
 }
 
-run()
+build(graph)

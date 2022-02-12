@@ -23,6 +23,9 @@
   "homepage": "https://github.com/Determination-cheng/oh-my-packup#readme",
   "dependencies": {
     "@babel/parser": "^7.17.0",
-    "@babel/traverse": "^7.17.0"
+    "@babel/traverse": "^7.17.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "ejs": "^3.1.6"
   }
 }
