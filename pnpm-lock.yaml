@@ -1,0 +1,17 @@
+lockfileVersion: 5.3
+
+specifiers:
+  '@babel/parser': ^7.17.0
+
+dependencies:
+  '@babel/parser': registry.npmmirror.com/@babel/parser/7.17.0
+
+packages:
+
+  registry.npmmirror.com/@babel/parser/7.17.0:
+    resolution: {integrity: sha512-VKXSCQx5D8S04ej+Dqsr1CzYvvWgf20jIw2D+YhQCrIlr2UZGaDds23Y0xg75/skOxpLCRpUZvk/1EAVkGoDOw==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@babel/parser/-/parser-7.17.0.tgz}
+    name: '@babel/parser'
+    version: 7.17.0
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+    dev: false

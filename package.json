@@ -1,0 +1,27 @@
+{
+  "name": "oh-my-packup",
+  "version": "1.0.0",
+  "description": "packup core",
+  "main": "index.js",
+  "type": "module",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Determination-cheng/oh-my-packup.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Determination-cheng/oh-my-packup/issues"
+  },
+  "homepage": "https://github.com/Determination-cheng/oh-my-packup#readme",
+  "dependencies": {
+    "@babel/parser": "^7.17.0"
+  }
+}
