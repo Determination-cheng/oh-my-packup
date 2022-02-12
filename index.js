@@ -62,9 +62,9 @@ function build(graph) {
     //* 提供给 ejs 模板的信息
     const data = graph.map(({depMap, code, id}) => {
         return {
-            id,
-            code,
-            depMap,
+            id,     // 文件模块在 modules 中的 id
+            code,   // 文件模块的代码
+            depMap, // 文件模块的依赖
         }
     })
 
