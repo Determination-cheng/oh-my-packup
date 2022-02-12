@@ -1,4 +1,4 @@
-import { bar } from './bar';
+import { bar } from './bar.js';
 
 console.log('main')
 
